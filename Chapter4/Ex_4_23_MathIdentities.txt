@@ -1,0 +1,15 @@
+Expressions:                                      Failure rate:
+a-b, -(b-a)                                                   0
+a/b, 1/(b/a)                                              0.285
+(a*b)**4, a**4*b**4                                       0.748
+(a+b)**2, a**2+2*a*b+b**2                                 0.472
+(a+b)*(a-b), a**2-b**2                                    0.667
+exp(a+b), exp(a)*exp(b)                                   0.584
+log(a**b), b*log(a)                                       0.549
+log(a*b), log(a)+log(b)                                   0.434
+a*b, exp(log(a)+log(b))                                   0.254
+1/(1/a+1/b), a*b/(a+b)                                    0.471
+a*(sin(b)**2+cos(b)**2), a                                0.249
+sinh(a+b), exp(a)*exp(b)-exp(-a)*exp(-b)/2                    1
+tan(a+b), sin(a+b)/cos(a+b)                               0.323
+sin(a+b), sin(a)*cos(b)+sin(b)*cos(a)                     0.668
