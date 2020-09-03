@@ -6,7 +6,7 @@ Created on Mon Aug 31 16:03:29 2020
 """
 # This exercise seems a bit flawed..
 #
-# Functions transition (with variable interval_limits) and 
+# Functions transition (containing a variable interval_limits) and 
 # mutate_via_markov_chain referred to in Exercise 8.47, seem to refer
 # to those in dna_functions.py of Chapter 9. Section 8.3.4 in the
 # book does not contain any function named transition, and no
