@@ -27,7 +27,6 @@ def test_PolarPoint():
     p2 = PolarPoint(3.0, pi/2)
     tol = 1E-15
     msg = 'Error in class PolarPoint'
-    success = True
     success = \
     abs(p1.x-sqrt(2.0)) < tol and\
     abs(p1.y-sqrt(2.0)) < tol and\
