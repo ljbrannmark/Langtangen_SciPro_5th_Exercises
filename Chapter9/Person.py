@@ -19,7 +19,6 @@ class Person(object):
     
 class Worker(Person):
     def __init__(self, name, company='', company_address='', job_phone='', **kwargs):
-        print kwargs
         Person.__init__(self, name, **kwargs)
         self.company = company
         self.company_address = company_address
@@ -27,7 +26,6 @@ class Worker(Person):
         
 class Scientist(Worker):
     def __init__(self, name, discipline='', science_type=[], **kwargs):
-        print kwargs
         Worker.__init__(self, name, **kwargs)
         self.discipline = discipline
         self.science_type = science_type
@@ -43,10 +41,10 @@ class Professor(Scientist):
         
 pe = Person('Helmer Bryd', address='Gimogatan 9')
 wo = Worker('Helmer Bryd', address='Gimogatan 9', company='Olofssons Bageri', company_address='St Olofsgatan 4', job_phone='070-5403475')
-sc = Scientist('Johan Bååth', address = 'Gimogatan 9')
-re = Researcher('Peter Faxman', address = 'Gimogatan 9', discipline='Physics', science_type=['Experimental', 'Computational'])
-po = Postdoc('Alma Mahler', address = 'Gimogatan 9', discipline='Musicology', science_type=['Behavioral'], company='Universität Freiburg')
-pr = Professor('Johan Bååth', address = 'Gimogatan 9', birthday = '1974-09-20', nationality='Swedish', job_phone='073-6783465', company='KTH')
+sc = Scientist('Johan Bååth', address = 'Storgatan 12')
+re = Researcher('Peter Faxman', address = 'Dragarbrunnsgatan 8', discipline='Physics', science_type=['Experimental', 'Computational'])
+po = Postdoc('Alma Mahler', address = 'Vaksalagatan 11', discipline='Musicology', science_type=['Behavioral'], company='Universität Freiburg')
+pr = Professor('Johan Bååth', address = 'Storgatan 12', birthday = '1974-09-20', nationality='Swedish', job_phone='073-6783465', company='KTH')
 
 for person in [pe, wo, sc, re, po, pr]:
     print person
