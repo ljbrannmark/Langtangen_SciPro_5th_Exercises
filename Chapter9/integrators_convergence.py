@@ -20,10 +20,11 @@ N = len(n_values)-1
 
 #Dictionaries for storing the errors and estimated constants for each method:
 errors = {m.__name__: [0]*(N+1) for m in methods}
-rate_constants = {m.__name__: {'r': None, 'C': None} for m in methods}
+rate_constants = {m.__name__: {'r': [0]*N, 'C': [0]*N} for m in methods}
 
-f = lambda x: 2.0 + cos(20*pi*x) - x**2 + exp(x)
-F = lambda x: 2.0*x + sin(20*pi*x) - x**3/3.0 + exp(x)
+f = lambda x: 2.0 + cos(10*pi*x) - x**2 + exp(x)
+F = lambda x: 2.0*x + sin(10*pi*x) - x**3/3.0 + exp(x)
+
 a = -1.0
 b = 1.0
 
@@ -32,10 +33,8 @@ integral_exact = F(b) - F(a)
 print '\n%-12s%6s%6s%14s%12s%12s'%('Method', 'i', 'n_i', 'E_i', 'r_i', 'C_i')
 for method in methods:
     m = method.__name__
-    r = [0]*N  #[r_0, r_1, ..., r_N-1]
-    C = [0]*N  #[C_0, r_1, ..., C_N-1]
     
-    #Compute the errors E_0, ... E_N
+    #Compute the errors E_0, ..., E_N
     for i in range(N+1):
         n = n_values[i]
         I = method(a, b, n)
@@ -46,11 +45,11 @@ for method in methods:
     for i in range(N):
         E_i, E_ip1 = errors[m][i], errors[m][i+1]
         n_i, n_ip1 = n_values[i], n_values[i+1]
-        r[i] = log(E_i/E_ip1) / log(n_i/float(n_ip1))
-        C[i] = E_i*n_values[i]**(-r[i])
-    rate_constants[m]['r'] = r
-    rate_constants[m]['C'] = C
+        r_i = log(E_i/E_ip1) / log(n_i/float(n_ip1))
+        rate_constants[m]['r'][i] = r_i
+        rate_constants[m]['C'][i] = E_i*n_values[i]**(-r_i)
     
+    #Print the results for current method, for i = 0, ..., N-1
     print '-'*62
     for i in range(N):
         print '%-12s%6d%6d%14.4g%12.4g%12.4g'\
