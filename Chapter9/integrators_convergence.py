@@ -55,3 +55,7 @@ for method in methods:
         print '%-12s%6d%6d%14.4g%12.4g%12.4g'\
         %(m, i, n_values[i], errors[m][i],\
           rate_constants[m]['r'][i], rate_constants[m]['C'][i])
+    i = N
+    #Print the results for current method, for i = N
+    print '%-12s%6d%6d%14.4g%12s%12s'%(m, i, n_values[i], errors[m][i], 'N/A', 'N/A')
+    
