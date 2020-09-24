@@ -8,22 +8,22 @@ Created on Wed Sep 23 22:14:30 2020
 import numpy as np
 from integrate import Midpoint, Trapezoidal, Simpson
 
-pi = np.pi
+pi  = np.pi
 cos = np.cos
 sin = np.sin
 exp = np.exp
 log = np.log
 
 methods = [Midpoint, Trapezoidal, Simpson]
-n_values = [2**k + 1 for k in range(2,12)]
+n_values = [2**k + 1 for k in range(2,12)] #[n_0, n_1, ..., n_N]
 N = len(n_values)-1
 
 #Dictionaries for storing the errors and estimated constants for each method:
 errors = {m.__name__: [0]*(N+1) for m in methods}
 rate_constants = {m.__name__: {'r': [0]*N, 'C': [0]*N} for m in methods}
 
-f = lambda x: 2.0 + cos(10*pi*x) - x**2 + exp(x)
-F = lambda x: 2.0*x + sin(10*pi*x) - x**3/3.0 + exp(x)
+f = lambda x: 2.0 + cos(7.5*pi*x) - x**2 + exp(x)
+F = lambda x: 2.0*x + sin(7.5*pi*x)/(7.5*pi) - x**3/3.0 + exp(x)
 
 a = -1.0
 b = 1.0
