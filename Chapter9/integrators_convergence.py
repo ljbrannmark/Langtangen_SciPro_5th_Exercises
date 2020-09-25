@@ -26,9 +26,9 @@ errors = {m.__name__: [0]*(N+1) for m in methods}
 rate_constants = {m.__name__: {'r': [0]*N, 'C': [0]*N} for m in methods}
 
 #Define a test function f(x) to integrate:
-f = lambda x: 2.0 + cos(7.5*pi*x) - x**2 + exp(x)
+f = lambda x: 2.0 + cos(3.3*pi*x) - x**2 + exp(x)
 #Define a function for the theoretically exact integral:
-F = lambda x: 2.0*x + sin(7.5*pi*x)/(7.5*pi) - x**3/3.0 + exp(x)
+F = lambda x: 2.0*x + sin(3.3*pi*x)/(3.3*pi) - x**3/3.0 + exp(x)
 
 #Integral limits a and b:
 a = -1.0
@@ -62,7 +62,6 @@ for method in methods:
         print '%-12s%6d%6d%14.4g%12.4g%12.4g'\
         %(m, i, n_values[i], errors[m][i],\
           rate_constants[m]['r'][i], rate_constants[m]['C'][i])
-    i = N
     #Print the error E_i for current method, for i = N
-    print '%-12s%6d%6d%14.4g%12s%12s'%(m, i, n_values[i], errors[m][i], 'N/A', 'N/A')
+    print '%-12s%6d%6d%14.4g%12s%12s'%(m, N, n_values[N], errors[m][N], 'N/A', 'N/A')
     
