@@ -5,6 +5,12 @@ Created on Fri Sep 25 21:50:12 2020
 @author: lars-johan.brannmark
 """
 
+# The instructions in the exercise 9.16 are quite vague:
+# Is x an array? is self.a = x[0], or just self.a <= x[0]? 
+#Is self.a <= x[k] <= self.b ? Or should a and x be chosen freely in
+#the computation of F(x)?
+
+
 import numpy as np
 import math
 
@@ -28,39 +34,23 @@ class Integrator(object):
     
     def F(self, f, a, x):
         #Method for computing F(x) = integral of f(x) from a to x, where
-        #f and a can be set freely, and x is an array of values:
+        #f and a can be set freely, and x may be an array of values:
         # a <= x[0] < x[1] < ... < x[m].
-        
-        #Store away self.a, self.b, self.n that were set in the constructor:
-        a_old, b_old, n = self.a, self.b, self.n
-        if isinstance(x, np.ndarray):
-            F = np.zeros_like(x)
-            self.a = a
-            self.b = x[0]
-            n_0 = int(np.ceil(n*(x[0]-a)/(x[-1]-a)))
-            if n_0 == 0:
-                F[0] = 0
-            else:
-                self.n = n_0
-                self.points, self.weights = self.construct_method()
-                F[0] = self.integrate(f)
-            for k in range(1,len(x)):
-                self.a = x[k-1]
-                self.b = x[k]
-                n_k = int(np.ceil(n*(x[k]-x[k-1])/(x[-1]-a)))
-                self.n = n_k
-                self.points, self.weights = self.construct_method()
-                F[k] = F[k-1] + self.integrate(f)
-        elif isinstance(x, (int, float)):
-            self.a = a
-            self.b = x
-            self.points, self.weights = self.construct_method()
-            F = self.integrate(f)
+        F = np.zeros_like(x)
+        n = self.n
+        #How many points between a and x[0] ? 
+        n_0 = int(np.ceil(n*(x[0]-a)/(x[-1]-a)))
+        if n_0 == 0:
+            F[0] = 0
         else:
-            raise TypeError('wrong format of x')
-        #Restore the parameters, points and weights:
-        self.a, self.b, self.n = a_old, b_old, n
-        self.points, self.weights = self.construct_method()
+            #Create a new integral object i, to integrate from a to x[0]
+            i = self.__class__(a, x[0], n_0)
+            F[0] = i.integrate(f)
+        for k in range(1,len(x)):
+            n_k = int(np.ceil(n*(x[k]-x[k-1])/(x[-1]-a)))
+            #Create a new integral object i, to integrate from x[k-1] to x[k]
+            i = self.__class__(x[k-1], x[k], n_k)
+            F[k] = F[k-1] + i.integrate(f)
         return F
 
 
@@ -126,10 +116,6 @@ class GaussLegendre2_vec(Integrator):
         return x, w
 
 
-# A linear function will be exactly integrated by all
-# the methods, so such an f is the candidate for testing
-# the implementations
-
 def test_F():
     """Check that linear functions are integrated exactly."""
     def f(x):
@@ -139,10 +125,10 @@ def test_F():
         """Integral of f."""
         return x**2 - 3*x
 
-    a = 2; b = 3; n = 1001    # test data
-    x = np.linspace(a, a+10, 5)
+    a = 1; b = 6; n = 1001    # test data
+    x = np.linspace(a, a+10, 100)
     I_exact = F(x) - F(a)
-    tol = 1E-3
+    tol = 1E-13
 
     methods = [Midpoint, Trapezoidal, Simpson, GaussLegendre2,
                GaussLegendre2_vec]
