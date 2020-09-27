@@ -5,10 +5,10 @@ Created on Fri Sep 25 21:50:12 2020
 @author: lars-johan.brannmark
 """
 
-# The instructions in the exercise 9.16 are quite vague:
-# Is x an array? is self.a = x[0], or just self.a <= x[0]? 
-#Is self.a <= x[k] <= self.b ? Or should a and x be chosen freely in
-#the computation of F(x)?
+# The instructions for exercise 9.16 are quite vague:
+# Is x supposed to be an array? Is it assumed that self.a = x[0], or 
+#just self.a <= x[0]? Is self.a <= x[k] <= self.b ? Or should a and x
+#be chosen freely in the computation of F(x)?
 
 
 import numpy as np
