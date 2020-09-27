@@ -51,62 +51,41 @@ if __name__ == '__main__':
     cos = np.cos
     tanh = np.tanh
     
-    f1 = 'sin(x)'
-    df1 = 'cos(x)'
-    f2 = 'sin(x) - x'
-    df2 = 'cos(x) - 1'
-    f3 = 'sin(x) - x**5'
-    df3 = 'cos(x) - 5*x**4'
-    f4 = 'x**4*sin(x)'
-    df4 = '4*x**3*sin(x) + x**4*cos(x)'
-    f5 = 'x**4 - 16.0'
-    df5 = '4*x**3'
-    f6 = 'x**10 - 1'
-    df6 = '10*x**9'
-    f7 = 'tanh(x)'
-    df7 = '1 - tanh(x)**2'
-    f8 = 'tanh(x) - x**10'
-    df8 = '1 - tanh(x)**2 - 10*x**9'
+    print 'Input function f(x) and its derivative f\'(x):'
+    f_str = raw_input('f(x) = ')
+    f = lambda x: eval(f_str)
     
-    #Collect the equations and their start values in a list of tuples:
-    equations = [(f1, df1, [-4.0, -2.0], [-4.0, -3.9]),\
-                 (f2, df2, [-1.0, 0.9], [-1.0, -0.9]),\
-                 (f3, df3, [-1.5, 0.7], [-1.5, -1.49]),\
-                 (f4, df4, [3.0, 5.0], [3.0, 3.1]),\
-                 (f5, df5, [-5.0, 0.0], [-5.0, -4.9]),\
-                 (f6, df6, [0.9, 1.5], [1.5, 1.51]),\
-                 (f7, df7, [-1.0, 1.1], [-1.0, -0.9]),\
-                 (f8, df8, [0.9, 1.5], [0.9, 0.91])]
-    
-    for f_str, df_str, a_b, x0_x1 in equations:
-        
-        f = lambda x: eval(f_str)
+    df_str = raw_input('f\'(x) = ')
+    if df_str == '' or df_str is None:
+        df = None
+    else:
         df = lambda x: eval(df_str)
-        
-        a, b = a_b
-        x0, x1 = x0_x1
-        
-        rf_n = Newton(f, df)
-        rf_b = Bisection(f, df)
-        rf_s = Secant(f, df)
-        
-        maxit = 200
-        tol = 1e-9
-        
-        rf_n.solve(start_values=[x0], max_iter=maxit, tolerance=tol)
-        rf_b.solve(start_values=[a, b, (a + b)/2.0], max_iter=maxit, tolerance=tol)
-        rf_s.solve(start_values=[x0, x1], max_iter=maxit, tolerance=tol)
-        
-        print '%s\nAlgebraic equation: %s = 0'%('-'*50, f_str)
-        print 'Newton method interations:'
-        for x in rf_n.x:
-            print 'x=%g'%x
-        print 'f(x)=%g'%f(rf_n.x[-1])
-        print 'Bisection method interations:'
-        for x in rf_b.x:
-            print 'x=%g'%x
-        print 'f(x)=%g'%f(rf_b.x[-1])
-        print 'Secant method interations:'
-        for x in rf_s.x:
-            print 'x=%g'%x
-        print 'f(x)=%g'%f(rf_s.x[-1])
+    
+    print '\nInput interval limits [a, b] for the Bisection method:'
+    a = float(raw_input('a = '))
+    b = float(raw_input('b = '))
+    
+    print '\nInput start values [x0, x1] for the Newton (uses x0 only) and Secant (uses x0 and x1) methods:'
+    x0 = float(raw_input('x0 = '))
+    x1 = float(raw_input('x1 = '))
+    
+    rf_n = Newton(f, df)
+    rf_b = Bisection(f, df)
+    rf_s = Secant(f, df)
+    
+    maxit = 200
+    tol = 1e-9
+    
+    print '%s\nAlgebraic equation: %s = 0'%('-'*50, f_str)
+    print 'Newton method interations:'
+    (v1, v2, v3, v4) = rf_n.solve(start_values=[x0], max_iter=maxit, tolerance=tol)
+    for v in v4:
+        print 'x = %g, f(x) = %g'%(v[0], v[1])
+    print 'Bisection method interations:'
+    (v1, v2, v3, v4) = rf_b.solve(start_values=[a, b, (a + b)/2.0], max_iter=maxit, tolerance=tol)
+    for v in v4:
+        print 'x = %g, f(x) = %g'%(v[0], v[1])
+    print 'Secant method interations:'
+    (v1, v2, v3, v4) = rf_s.solve(start_values=[x0, x1], max_iter=maxit, tolerance=tol)
+    for v in v4:
+        print 'x = %g, f(x) = %g'%(v[0], v[1])
