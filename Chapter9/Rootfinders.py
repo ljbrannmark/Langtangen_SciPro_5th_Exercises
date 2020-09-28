@@ -78,15 +78,15 @@ if __name__ == '__main__':
     tol = 1e-9
     
     print '%s\nEquation: %s = 0\n'%('-'*50, f_str)
-    print 'Newton method interations:'
+    print 'Newton method iterations:'
     (v1, v2, v3, v4) = rf_n.solve(start_values=[x0], max_iter=maxit, tolerance=tol)
     for v in v4:
         print 'x = %g, f(x) = %g'%(v[0], v[1])
-    print 'Bisection method interations:'
+    print 'Bisection method iterations:'
     (v1, v2, v3, v4) = rf_b.solve(start_values=[a, b, (a + b)/2.0], max_iter=maxit, tolerance=tol)
     for v in v4:
         print 'x = %g, f(x) = %g'%(v[0], v[1])
-    print 'Secant method interations:'
+    print 'Secant method iterations:'
     (v1, v2, v3, v4) = rf_s.solve(start_values=[x0, x1], max_iter=maxit, tolerance=tol)
     for v in v4:
         print 'x = %g, f(x) = %g'%(v[0], v[1])
