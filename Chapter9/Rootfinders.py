@@ -47,6 +47,7 @@ class Secant(Rootfinder):
     
     
 if __name__ == '__main__':
+    print 'Solving Exercise A.11 using the Rootfinder hierarchy:\n' 
     sin = np.sin
     cos = np.cos
     tanh = np.tanh
@@ -76,7 +77,7 @@ if __name__ == '__main__':
     maxit = 200
     tol = 1e-9
     
-    print '%s\nAlgebraic equation: %s = 0'%('-'*50, f_str)
+    print '%s\nEquation: %s = 0\n'%('-'*50, f_str)
     print 'Newton method interations:'
     (v1, v2, v3, v4) = rf_n.solve(start_values=[x0], max_iter=maxit, tolerance=tol)
     for v in v4:
