@@ -63,10 +63,10 @@ class CalculusCalculator(object):
         return g
         
 if __name__ == '__main__':
-    N = 100
+    N = 200
     a = -1.99
     b = 3.0
-    x = np.linspace(a, b, 201)
+    x = np.linspace(a, b, N+1)
     f = lambda x: np.exp(x) - 2
     c = CalculusCalculator(f, a, b)
     
