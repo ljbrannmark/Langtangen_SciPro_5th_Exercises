@@ -4,10 +4,11 @@ Created on Sat Oct  3 00:33:45 2020
 
 @author: lars-johan.brannmark
 """
+
 import numpy as np
 from pysketcher import *
-
 from DrawPerson import Person
+from scitools.std import movie
 
 def rotate_arms(fig, deg_step):
     arm_1_c = (fig['arms']['arm_1']['line'].x[0], fig['arms']['arm_1']['line'].y[0])
@@ -16,7 +17,7 @@ def rotate_arms(fig, deg_step):
     fig['arms']['arm_2'].rotate(-deg_step, arm_2_c)
     
 def wave_arms(t, fig):
-    angle_step = 1.0*(2.0*(round(t)%2)-1.0)
+    angle_step = 2.0*(round(t)%2)-1.0
     rotate_arms(fig, angle_step)
 
 R = 0.12
@@ -27,9 +28,12 @@ fig = Person(hc, R, arms_angle=0)
 
 tp = np.linspace(0, 2, 50, endpoint=False)
 time_step = tp[1]-tp[0]
+
 files = animate(fig, tp, wave_arms, moviefiles=True,
                 pause_per_frame=time_step)
 
 files_wildcard = files.split('%')[0] + '*.png'
-from scitools.std import movie
-movie(files_wildcard, encoder='html', output_file='vehicle1')
+os.system('convert -delay %d %s* waving_person_movie.gif' % (time_step*100, files_wildcard))
+
+for filename in glob.glob('tmp_frame_*.png'):
+    os.remove(filename)

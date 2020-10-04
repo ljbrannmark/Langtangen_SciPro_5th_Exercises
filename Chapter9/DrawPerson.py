@@ -41,4 +41,4 @@ if __name__ == '__main__':
     drawing_tool.set_coordinate_system(xmin=hc[0]-1.0, xmax=hc[0]+1.0, ymin=hc[1]-2.5, ymax=hc[1]+0.5)
     p.draw()
     drawing_tool.display()
-    s = raw_input('Press enter:')
+    raw_input('Press enter:')
